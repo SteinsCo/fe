@@ -1,15 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 
 import { ChapterListItem, useChapterList } from "@/features/chapter";
-import { type Manga, useMangaDetail } from "@/features/manga";
+import { MANGA_STATUS_LABEL, useMangaDetail } from "@/features/manga";
 import { EmptyState, PageError, PageLoading } from "@/shared/ui/feedback";
-
-const STATUS_LABEL: Record<Manga["status"], string> = {
-  ongoing: "연재 중",
-  completed: "완결",
-  hiatus: "휴재",
-  cancelled: "중단",
-};
 
 export function MangaDetailPage() {
   const { slug = "" } = useParams<{ slug: string }>();
@@ -49,7 +42,7 @@ export function MangaDetailPage() {
           <dl className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-neutral-300">
             <div className="flex gap-1">
               <dt className="text-neutral-500">상태</dt>
-              <dd>{STATUS_LABEL[manga.status]}</dd>
+              <dd>{MANGA_STATUS_LABEL[manga.status]}</dd>
             </div>
             <div className="flex gap-1">
               <dt className="text-neutral-500">언어</dt>
@@ -90,14 +83,13 @@ export function MangaDetailPage() {
 
       <section className="flex flex-col gap-3">
         <h2 className="text-xl font-semibold">챕터 목록</h2>
-        <ChapterListBody mangaSlug={slug} list={chapters} />
+        <ChapterListBody list={chapters} />
       </section>
     </div>
   );
 }
 
 type ChapterListBodyProps = {
-  mangaSlug: string;
   list: ReturnType<typeof useChapterList>;
 };
 

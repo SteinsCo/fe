@@ -1,13 +1,8 @@
 import { Link } from "react-router-dom";
 
-import type { Manga } from "../schemas/manga";
+import { MANGA_STATUS_LABEL } from "../constants";
 
-const STATUS_LABEL: Record<Manga["status"], string> = {
-  ongoing: "연재 중",
-  completed: "완결",
-  hiatus: "휴재",
-  cancelled: "중단",
-};
+import type { Manga } from "../schemas/manga";
 
 export function MangaCard({ manga }: { manga: Manga }) {
   return (
@@ -33,7 +28,7 @@ export function MangaCard({ manga }: { manga: Manga }) {
       <div className="flex flex-col gap-1">
         <h2 className="line-clamp-2 text-base font-semibold">{manga.title}</h2>
         <div className="flex flex-wrap items-center gap-2 text-xs text-neutral-400">
-          <span>{STATUS_LABEL[manga.status]}</span>
+          <span>{MANGA_STATUS_LABEL[manga.status]}</span>
           <span aria-hidden="true">·</span>
           <span>{manga.language.toUpperCase()}</span>
           {manga.authors && manga.authors.length > 0 ? (

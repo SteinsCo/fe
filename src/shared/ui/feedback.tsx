@@ -47,6 +47,9 @@ export function EmptyState({ message }: { message: string }) {
 
 function messageFor(error: unknown): string {
   if (!ApiError.is(error)) return "예상치 못한 오류가 발생했습니다.";
+  // SCHEMA_001 은 백엔드 contract 불일치 — 진단 메시지(endpoint 등)가 raw 로 노출되지
+  // 않도록 일반화된 사용자 문구로 우선 매핑한다. 상세는 로깅·Sentry 채널로만.
+  if (error.code === "SCHEMA_001") return "서버 응답 형식이 예상과 다릅니다.";
   switch (error.category) {
     case "network":
       return "네트워크 연결을 확인해주세요.";
@@ -62,7 +65,11 @@ function messageFor(error: unknown): string {
       return "로그인이 필요합니다.";
     case "forbidden":
       return "이 작업을 수행할 권한이 없습니다.";
-    default:
+    case "validation":
+    case "conflict":
       return error.message || "오류가 발생했습니다.";
+    default:
+      // unknown/internal 등 분류 외 코드의 raw message 는 디버깅 정보일 수 있어 노출 금지.
+      return "오류가 발생했습니다.";
   }
 }

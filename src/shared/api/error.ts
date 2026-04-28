@@ -86,11 +86,15 @@ export async function toApiError(err: unknown): Promise<ApiError> {
     body = undefined;
   }
 
+  // statusText 는 일부 프록시/HTTP/2 응답에서 빈 문자열로 내려온다.
+  // ?? 는 null/undefined 만 폴백하므로 빈 문자열도 명시적으로 fallback 처리한다.
+  const fallbackMessage = response.statusText || `HTTP ${response.status}`;
+
   return new ApiError({
     category: categoryFromStatus(response.status),
     status: response.status,
     code: body?.error?.code ?? `HTTP_${response.status}`,
-    message: body?.error?.message ?? response.statusText,
+    message: body?.error?.message || fallbackMessage,
     details: body?.error?.details,
     cause: err,
   });
