@@ -1,0 +1,8 @@
+dist
+node_modules
+coverage
+pnpm-lock.yaml
+
+# Convention/룰셋 markdown은 직접 포맷팅된 상태로 관리
+.claude/
+.github/
