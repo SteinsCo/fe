@@ -41,9 +41,7 @@ export function PageError({ error, onRetry }: ErrorViewProps) {
 
 export function EmptyState({ message }: { message: string }) {
   return (
-    <div className="flex min-h-[40vh] items-center justify-center text-neutral-400">
-      {message}
-    </div>
+    <div className="flex min-h-[40vh] items-center justify-center text-neutral-400">{message}</div>
   );
 }
 

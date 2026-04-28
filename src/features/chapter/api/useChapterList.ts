@@ -9,11 +9,7 @@ import { chapterKeys } from "./keys";
 async function fetchChapterList(mangaSlug: string): Promise<Chapter[]> {
   try {
     const json = await apiClient.get(`manga/${mangaSlug}/chapters`).json();
-    return parseOrThrow(
-      ChapterListResponseSchema,
-      json,
-      `GET /manga/${mangaSlug}/chapters`,
-    ).data;
+    return parseOrThrow(ChapterListResponseSchema, json, `GET /manga/${mangaSlug}/chapters`).data;
   } catch (err) {
     return normalizeApiError(err);
   }

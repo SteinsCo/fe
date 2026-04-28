@@ -9,11 +9,7 @@ import { readerKeys } from "./keys";
 async function fetchChapterManifest(chapterId: string): Promise<Manifest> {
   try {
     const json = await apiClient.get(`chapters/${chapterId}/pages`).json();
-    return parseOrThrow(
-      ManifestResponseSchema,
-      json,
-      `GET /chapters/${chapterId}/pages`,
-    ).data;
+    return parseOrThrow(ManifestResponseSchema, json, `GET /chapters/${chapterId}/pages`).data;
   } catch (err) {
     return normalizeApiError(err);
   }

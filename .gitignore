@@ -18,3 +18,5 @@ pnpm-debug.log*
 .vscode/*
 !.vscode/extensions.json
 *.tsbuildinfo
+test-results.xml
+coverage
